@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Explainability Grader</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>AI Explainability Grader</h1>
+            <p class="description">Grade how well an AI explains complex topics to a 12-year-old audience.</p>
+        </header>
+
+        <div class="input-section">
+            <div class="form-group">
+                <label for="ai-name">AI Model Name:</label>
+                <input type="text" id="ai-name" placeholder="e.g., ChatGPT, Claude, Gemini">
+            </div>
+
+            <div class="form-group">
+                <label for="prompt">Prompt Given:</label>
+                <textarea id="prompt" rows="2">Explain like I'm 12: </textarea>
+            </div>
+
+            <div class="form-group">
+                <label for="response">AI Response:</label>
+                <textarea id="response" rows="8" placeholder="Paste the AI's response here..."></textarea>
+            </div>
+        </div>
+
+        <div class="criteria-section">
+            <h2>Grading Criteria</h2>
+            
+            <div class="criterion">
+                <div class="criterion-header">
+                    <h3>Simplicity of Language</h3>
+                    <span class="weight">25%</span>
+                </div>
+                <p>Does the response use simple words and short sentences that a 12-year-old would understand?</p>
+                <div class="slider-container">
+                    <input type="range" min="1" max="10" value="5" class="slider" id="simplicity">
+                    <span class="slider-value">5/10</span>
+                </div>
+            </div>
+
+            <div class="criterion">
+                <div class="criterion-header">
+                    <h3>Clarity of Explanation</h3>
+                    <span class="weight">25%</span>
+                </div>
+                <p>Is the explanation clear, logical, and easy to follow?</p>
+                <div class="slider-container">
+                    <input type="range" min="1" max="10" value="5" class="slider" id="clarity">
+                    <span class="slider-value">5/10</span>
+                </div>
+            </div>
+
+            <div class="criterion">
+                <div class="criterion-header">
+                    <h3>Relatable Examples</h3>
+                    <span class="weight">20%</span>
+                </div>
+                <p>Does it use concrete examples, analogies or metaphors that a 12-year-old would relate to?</p>
+                <div class="slider-container">
+                    <input type="range" min="1" max="10" value="5" class="slider" id="examples">
+                    <span class="slider-value">5/10</span>
+                </div>
+            </div>
+
+            <div class="criterion">
+                <div class="criterion-header">
+                    <h3>Avoidance of Jargon</h3>
+                    <span class="weight">15%</span>
+                </div>
+                <p>Does it avoid technical jargon, or clearly explain technical terms when used?</p>
+                <div class="slider-container">
+                    <input type="range" min="1" max="10" value="5" class="slider" id="jargon">
+                    <span class="slider-value">5/10</span>
+                </div>
+            </div>
+
+            <div class="criterion">
+                <div class="criterion-header">
+                    <h3>Engagement Factor</h3>
+                    <span class="weight">15%</span>
+                </div>
+                <p>Is the explanation interesting, engaging, and appropriate for a young audience?</p>
+                <div class="slider-container">
+                    <input type="range" min="1" max="10" value="5" class="slider" id="engagement">
+                    <span class="slider-value">5/10</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="button-section">
+            <button id="grade-btn">Grade Response</button>
+        </div>
+
+        <div class="results-section" id="results">
+            <h2>Grading Results</h2>
+            <div id="score-display"></div>
+            <div id="feedback-display"></div>
+        </div>
+
+        <div class="report-section">
+            <button id="report-btn">Generate Report</button>
+            <div id="report-content" class="hidden">
+                <h3>Markdown Report</h3>
+                <textarea id="markdown-report" readonly></textarea>
+                <div class="report-actions">
+                    <button id="copy-btn">Copy to Clipboard</button>
+                    <button id="download-btn">Download Report</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>

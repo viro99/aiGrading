@@ -216,6 +216,17 @@ button:hover {
     background-color: #8e44ad;
 }
 
+
+.submit-class-btn {
+    background-color: #34a853;
+    margin-top: 10px;
+    width: 100%;
+}
+
+.submit-class-btn:hover {
+    background-color: #2d9249;
+}
+
 @media (max-width: 768px) {
     .container {
         padding: 10px;

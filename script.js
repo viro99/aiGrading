@@ -48,6 +48,9 @@ document.addEventListener('DOMContentLoaded', function() {
     
     // Download button functionality
     document.getElementById('download-btn').addEventListener('click', downloadReport);
+    
+    // Add event listener for Submit to Class Results button
+    document.getElementById('submit-class-btn').addEventListener('click', submitToClassResults);
 });
 
 // Grade the AI response
@@ -243,4 +246,61 @@ function downloadReport() {
         document.body.removeChild(a);
         URL.revokeObjectURL(url);
     }, 0);
+
+}
+
+// Add Google Form submission functionality
+function submitToClassResults() {
+    const aiName = document.getElementById('ai-name').value || "Unknown AI";
+    const prompt = document.getElementById('prompt').value.trim();
+    const response = document.getElementById('response').value.trim();
+    
+    if (!response) {
+        alert("Please enter an AI response before submitting to the class results");
+        return;
+    }
+    
+    // Get ratings from sliders
+    const ratings = {};
+    for (const criterionId in criteria) {
+        ratings[criterionId] = parseInt(document.getElementById(criterionId).value);
+    }
+    
+    // Calculate score
+    const score = calculateScore(ratings);
+    
+    // Build the Google Form URL with prefilled values
+    const baseUrl = "https://docs.google.com/forms/d/e/1FAIpQLSctWE4N2MR5oLL3atASAT6JmXeS6XdkIyc7cAPAqXg-Zx1RPg/viewform";
+    
+    // Create URL parameters for form prefill
+    const params = new URLSearchParams();
+    
+    // Add parameters with the correct entry IDs from your form
+    params.append('entry.1877429369', document.getElementById('grader-name')?.value || "Anonymous"); // Student Name field (you may need to add this input to your form)
+    params.append('entry.2049318097', aiName); // AI Model Name
+    params.append('entry.1871376526', prompt); // Prompt
+    params.append('entry.446569339', response.substring(0, 500)); // Response text (limited to 500 chars)
+    
+    // Format ratings for submission
+    // Create a formatted string with all ratings
+    const ratingsText = `Simplicity: ${ratings.simplicity}/10
+Clarity: ${ratings.clarity}/10
+Examples: ${ratings.examples}/10
+Jargon: ${ratings.jargon}/10
+Engagement: ${ratings.engagement}/10`;
+    
+    params.append('entry.1706517547', ratingsText); // All ratings
+    params.append('entry.1141496752', `${score}/100`); // Overall Score
+    
+    // Add feedback as additional comments
+    const feedback = provideFeedback(ratings);
+    params.append('entry.2056139338', feedback); // Feedback/comments
+    
+    // Open the form in a new tab
+    const url = baseUrl + '?' + params.toString();
+    window.open(url, '_blank');
+    
+    // Inform user
+    alert("A submission form has been opened in a new tab. Please review the information and click Submit to add your evaluation to the class dataset.");
+
 }

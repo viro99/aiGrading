@@ -5,6 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>AI Explainability Grader</title>
     <link rel="stylesheet" href="styles.css">
+    <!-- Add Marked.js for markdown rendering -->
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
 </head>
 <body>
     <div class="container">
@@ -119,12 +121,16 @@
             <div id="feedback-display"></div>
         </div>
 
-
         <div class="report-section">
-            <button id="report-btn">Generate Report</button>
             <div id="report-content" class="hidden">
-                <h3>Markdown Report</h3>
-                <textarea id="markdown-report" readonly></textarea>
+                <div class="report-tabs">
+                    <button class="tab-btn active" data-tab="rendered">Rendered View</button>
+                    <button class="tab-btn" data-tab="raw">Raw Markdown</button>
+                </div>
+                
+                <div id="rendered-report" class="report-tab-content active"></div>
+                <textarea id="markdown-report" class="report-tab-content" readonly></textarea>
+                
                 <div class="report-actions">
                     <button id="copy-btn">Copy to Clipboard</button>
                     <button id="download-btn">Download Report</button>

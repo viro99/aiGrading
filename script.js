@@ -161,7 +161,18 @@ function generateReport() {
     
     // Show report section
     document.getElementById('report-content').classList.remove('hidden');
+    
+    // Update both raw and rendered versions
     document.getElementById('markdown-report').value = report;
+    document.getElementById('rendered-report').innerHTML = marked.parse(report);
+    
+    // Auto-resize the textarea to fit content
+    const textarea = document.getElementById('markdown-report');
+    textarea.style.height = 'auto';
+    textarea.style.height = textarea.scrollHeight + 'px';
+    
+    // Set up tab switching
+    setupReportTabs();
 }
 
 // Create markdown report content
@@ -303,4 +314,30 @@ Engagement: ${ratings.engagement}/10`;
     // Inform user
     alert("A submission form has been opened in a new tab. Please review the information and click Submit to add your evaluation to the class dataset.");
 
+}
+
+// Add this function to handle tab switching
+function setupReportTabs() {
+    const tabBtns = document.querySelectorAll('.tab-btn');
+    const tabContents = document.querySelectorAll('.report-tab-content');
+    
+    tabBtns.forEach(btn => {
+        btn.addEventListener('click', () => {
+            // Update active button
+            document.querySelector('.tab-btn.active').classList.remove('active');
+            btn.classList.add('active');
+            
+            // Show selected content
+            const targetTab = btn.getAttribute('data-tab');
+            tabContents.forEach(content => {
+                content.classList.remove('active');
+            });
+            
+            if (targetTab === 'rendered') {
+                document.getElementById('rendered-report').classList.add('active');
+            } else {
+                document.getElementById('markdown-report').classList.add('active');
+            }
+        });
+    });
 }

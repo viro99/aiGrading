@@ -137,6 +137,7 @@ function generateReport() {
     const aiName = document.getElementById('ai-name').value || "Unknown AI";
     const prompt = document.getElementById('prompt').value.trim();
     const response = document.getElementById('response').value.trim();
+    const graderNotes = document.getElementById('grader-notes').value.trim();
     
     if (!response) {
         document.getElementById('score-display').textContent = "Error: Please enter an AI response to grade";
@@ -157,7 +158,7 @@ function generateReport() {
     const feedback = provideFeedback(ratings);
     
     // Generate markdown report
-    const report = generateMarkdownReport(aiName, prompt, response, ratings, score, feedback);
+    const report = generateMarkdownReport(aiName, prompt, response, ratings, score, feedback, graderNotes);
     
     // Show report section
     document.getElementById('report-content').classList.remove('hidden');
@@ -165,7 +166,7 @@ function generateReport() {
 }
 
 // Create markdown report content
-function generateMarkdownReport(aiName, prompt, response, ratings, score, feedback) {
+function generateMarkdownReport(aiName, prompt, response, ratings, score, feedback, graderNotes) {
     const now = new Date();
     const dateStr = now.toLocaleString();
     
@@ -205,7 +206,7 @@ ${response}
 ${feedback}
 
 ## Grader Notes
-_Add your additional observations here._
+${graderNotes || "_No additional observations provided._"}
 `;
     
     return report;
